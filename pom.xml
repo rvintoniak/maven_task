@@ -9,27 +9,7 @@
     <url>http://maven.apache.org</url>
     <profiles>
         <profile>
-            <id>jar</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-shade-plugin</artifactId>
-                        <version>2.2</version>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>shade</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>surefire</id>
+            <id>surefire-skip</id>
             <build>
                 <plugins>
                     <plugin>
@@ -38,15 +18,90 @@
                         <version>2.12</version>
                         <configuration>
                             <excludes>
-                                <exclude>**/App.java</exclude>
+                                <exclude>**/Skip*.java</exclude>
                             </excludes>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <id>phrase</id>
-                                <phase>test</phase>
-                            </execution>
-                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>surefire-threads</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.12</version>
+                        <configuration>
+                            <parallel>classes</parallel>
+                            <threadCount>14</threadCount>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>jettywar</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <version>9.2.3.v20140905</version>
+                        <configuration>
+                            <war>src/main/java/com/softserve/sample.war</war>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>tomcatwar</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.tomcat.maven</groupId>
+                        <artifactId>tomcat7-maven-plugin</artifactId>
+                        <version>2.2</version>
+                        <configuration>
+                            <path>/</path>
+                            <warFile>src/main/java/com/softserve/sample.war</warFile>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>antrun</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.1</version>
+                        <configuration>
+                            <tasks>
+                                <echo>Using ANT:</echo>
+                                <copy file="src/main/java/com/softserve/sample.war" tofile="src/main/java/com/softserve/sample2.war"/>
+                            </tasks>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>mavencompiler</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.2</version>
+                        <configuration>
+                            <source>1.5</source>
+                            <target>1.4</target>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

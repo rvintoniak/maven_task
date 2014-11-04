@@ -1,0 +1,4 @@
+com.softserve:mavenexample:jar:1.0-SNAPSHOT
++- junit:junit:jar:3.8.1:test
+\- org.springframework:spring-core:jar:4.0.3.RELEASE:compile
+   \- commons-logging:commons-logging:jar:1.1.3:compile
